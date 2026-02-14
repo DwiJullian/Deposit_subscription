@@ -1,90 +1,90 @@
-# 📊 Prediksi Nasabah yang Berpotensi Membeli Deposito
+# 📊 Term Deposit Subscription Prediction
 
-Proyek ini dikembangkan dalam rangka kompetisi data science dengan tujuan membangun model machine learning untuk memprediksi apakah seorang nasabah akan membeli produk **deposito berjangka**.
+This project was developed as part of a data science competition. The goal is to build a machine learning model that predicts whether a bank customer will subscribe to a **term deposit product**.
 
 ---
 
 # 🏦 Business Context
 
-Dalam industri perbankan, efektivitas kampanye pemasaran sangat menentukan profitabilitas. Bank sering melakukan kampanye telemarketing atau outreach untuk menawarkan produk deposito berjangka kepada nasabah.
+In the banking industry, marketing campaign effectiveness plays a crucial role in profitability. Banks frequently conduct telemarketing or outreach campaigns to offer financial products such as term deposits.
 
-Namun, tantangan utamanya adalah:
+However, several challenges arise:
 
-* Tidak semua nasabah tertarik membeli deposito
-* Biaya menghubungi nasabah cukup besar (telemarketing, SMS, email campaign)
-* Tingkat respons biasanya rendah (data cenderung imbalanced)
+* Not all customers are interested in subscribing
+* Contacting customers incurs operational costs (telemarketing, SMS, email campaigns)
+* Response rates are typically low (the dataset is imbalanced)
 
-Dengan memanfaatkan data historis seperti:
+By leveraging historical data such as:
 
-* Informasi demografis
-* Riwayat pinjaman
-* Hasil kampanye sebelumnya
-* Indikator ekonomi makro
+* Customer demographics
+* Loan history
+* Previous campaign outcomes
+* Macroeconomic indicators
 
-Bank dapat membangun model prediktif untuk meningkatkan efisiensi kampanye.
+Banks can develop predictive models to improve campaign efficiency.
 
 ---
 
 # ❗ Business Problem
 
-Tanpa model prediksi:
+Without a predictive model:
 
-* Bank menghubungi terlalu banyak nasabah yang tidak tertarik
-* Biaya operasional meningkat
-* Conversion rate rendah
-* Tim marketing tidak bekerja secara optimal
+* Banks contact many customers who are not interested
+* Operational costs increase
+* Conversion rates remain low
+* Marketing teams do not work optimally
 
-Permasalahan utama:
+The core problem:
 
-> Bagaimana mengidentifikasi nasabah yang paling berpotensi membeli deposito agar kampanye menjadi lebih efektif dan efisien?
+> How can we identify customers who are most likely to subscribe to a term deposit in order to make marketing campaigns more effective and efficient?
 
 ---
 
 # 🎯 Business Objective
 
-Membangun model klasifikasi yang dapat memprediksi:
+To build a classification model that predicts:
 
-* **1** → Nasabah diprediksi akan membeli deposito
-* **0** → Nasabah diprediksi tidak akan membeli deposito
+* **1** → Customer is predicted to subscribe to a term deposit
+* **0** → Customer is predicted not to subscribe
 
-Tujuan akhirnya adalah:
+The ultimate objectives are:
 
-* Meningkatkan conversion rate kampanye
-* Mengurangi biaya marketing
-* Mengoptimalkan alokasi sumber daya tim sales
-* Meningkatkan pendapatan bank dari produk deposito
+* Increase campaign conversion rate
+* Reduce marketing costs
+* Optimize sales team resource allocation
+* Increase bank revenue from term deposit products
 
 ---
 
 # 📈 Business Metrics
 
-Karena dataset bersifat **imbalanced** (jumlah nasabah yang membeli deposito jauh lebih sedikit), maka metrik bisnis difokuskan pada:
+Since the dataset is **imbalanced** (the number of customers subscribing is significantly lower than those who do not), business evaluation focuses on:
 
-### 1️⃣ Precision (untuk kelas 1)
+### 1️⃣ Precision (Positive Class)
 
-Mengukur seberapa akurat model dalam memprediksi nasabah yang benar-benar membeli deposito.
+Measures how many customers predicted as subscribers actually subscribe.
 
-👉 Penting untuk menghindari pemborosan biaya marketing.
+👉 Important to avoid wasting marketing resources.
 
 ---
 
-### 2️⃣ Recall (untuk kelas 1)
+### 2️⃣ Recall (Positive Class)
 
-Mengukur seberapa banyak nasabah potensial yang berhasil ditangkap oleh model.
+Measures how many actual potential subscribers are correctly identified.
 
-👉 Penting agar tidak kehilangan calon pembeli potensial.
+👉 Important to avoid missing high-potential customers.
 
 ---
 
 ### 3️⃣ Conversion Rate Improvement
 
-Membandingkan conversion rate sebelum dan sesudah menggunakan model.
+Compare campaign conversion rate before and after implementing the model.
 
 ---
 
 ### 4️⃣ Cost Efficiency
 
-Mengukur penurunan biaya kontak terhadap nasabah yang tidak relevan.
+Measure the reduction in unnecessary customer contacts.
 
 ---
 
@@ -94,79 +94,81 @@ Mengukur penurunan biaya kontak terhadap nasabah yang tidak relevan.
 
 `berlangganan_deposito`
 
-* 1 → Berlangganan deposito
-* 0 → Tidak berlangganan
+* 1 → Subscribed
+* 0 → Not subscribed
 
 ## Feature Selection
 
-Beberapa fitur digunakan seperti:
+Features include:
 
-* Demografi (usia, pendidikan, status_perkawinan)
-* Riwayat kredit (gagal_bayar_sebelumnya, pinjaman)
-* Riwayat kampanye sebelumnya
-* Indikator ekonomi makro
+* Demographic attributes (age, education, marital status)
+* Credit history (previous default, loans)
+* Previous campaign history
+* Macroeconomic indicators
 
 ---
 
 # 📊 ML Metrics
 
-Awalnya, tuning hyperparameter dilakukan menggunakan **ROC-AUC**.
+Initially, hyperparameter tuning was performed using **ROC-AUC**.
 
-Namun, karena dataset bersifat imbalanced, penggunaan ROC-AUC kurang optimal.
-
-## ❌ Kelemahan ROC-AUC pada Imbalanced Data
-
-ROC-AUC tetap terlihat tinggi meskipun model kurang baik dalam mendeteksi kelas minoritas.
+However, due to class imbalance, ROC-AUC was not the most appropriate metric.
 
 ---
 
-## ✅ Metric yang Lebih Tepat: PR-AUC
+## ❌ Limitation of ROC-AUC in Imbalanced Data
 
-**Precision-Recall AUC (PR-AUC)** lebih sesuai karena:
+ROC-AUC can appear high even when the model performs poorly on the minority class.
 
-* Fokus pada performa kelas positif (nasabah yang membeli deposito)
-* Lebih sensitif terhadap kesalahan pada kelas minoritas
-* Lebih relevan dengan kebutuhan bisnis
+---
+
+## ✅ More Appropriate Metric: PR-AUC
+
+**Precision-Recall AUC (PR-AUC)** is more suitable because:
+
+* It focuses on performance for the positive class (subscribers)
+* It is more sensitive to errors in minority class prediction
+* It aligns better with business objectives
 
 ---
 
 # 🔧 Modeling Strategy
 
 * Data preprocessing
-* Encoding categorical variables
+* Categorical encoding
 * Hyperparameter tuning
-* Evaluasi model menggunakan:
+* Model evaluation using:
 
-  * PR-AUC (utama)
+  * PR-AUC (primary metric)
   * Precision
   * Recall
   * F1-Score
 
 ---
 
-# 📌 Insight & Lesson Learned
+# 📌 Insights & Lessons Learned
 
-Kesalahan utama dalam proyek ini:
+The main mistake in this project:
 
-> Menggunakan ROC-AUC sebagai metric tuning pada dataset imbalanced.
-
----
-
-# 🚀 Dampak Bisnis yang Diharapkan
-
-Dengan model ini, bank dapat:
-
-* Mengurangi jumlah nasabah yang dihubungi secara acak
-* Meningkatkan efisiensi kampanye
-* Meningkatkan probabilitas closing
-* Mengoptimalkan biaya operasional marketing
+> Using ROC-AUC as the primary tuning metric on an imbalanced dataset.
 
 ---
 
-# 🧠 Kesimpulan
+# 🚀 Expected Business Impact
 
-Proyek ini menunjukkan bahwa:
+With this model, the bank can:
 
-* Machine learning bukan hanya soal akurasi tinggi
-* Pemilihan metric harus selaras dengan kondisi data dan tujuan bisnis
-* Pada kasus imbalanced classification, PR-AUC jauh lebih relevan dibanding ROC-AUC
+* Reduce random or inefficient customer outreach
+* Improve campaign efficiency
+* Increase closing probability
+* Optimize marketing operational costs
+
+---
+
+# 🧠 Conclusion
+
+This project highlights that:
+
+* Machine learning is not just about achieving high accuracy
+* Metric selection must align with both data characteristics and business objectives
+* In imbalanced classification problems, PR-AUC is more informative than ROC-AUC
